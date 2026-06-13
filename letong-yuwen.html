@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="乐桐语文" />
+  <meta name="theme-color" content="#f97316" />
+  <title>乐桐一年级下册语文期末在线测试</title>
+  <style>
+    :root{
+      --bg:#fff7ed; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --brand:#f97316;
+      --brand2:#fb923c; --ok:#16a34a; --bad:#dc2626; --line:#fed7aa; --soft:#ffedd5;
+      --blue:#2563eb; --shadow:0 12px 30px rgba(154, 52, 18, .10);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;background:linear-gradient(180deg,#fff7ed,#fefce8 45%,#ffffff);color:var(--text);}
+    .wrap{max-width:1040px;margin:0 auto;padding:18px 14px 80px;}
+    .hero{background:linear-gradient(135deg,#f97316,#facc15);color:#fff;border-radius:28px;padding:24px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .hero:after{content:"语";position:absolute;right:20px;top:4px;font-size:96px;font-weight:900;opacity:.18;transform:rotate(8deg)}
+    .hero h1{margin:0 0 8px;font-size:28px;line-height:1.25}
+    .hero p{margin:4px 0;font-size:15px;opacity:.96}
+    .topbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+    button,.btn{border:0;border-radius:14px;padding:10px 14px;font-size:15px;font-weight:700;background:var(--brand);color:#fff;box-shadow:0 8px 18px rgba(249,115,22,.18);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px}
+    button.secondary{background:#fff;color:#9a3412;border:1px solid var(--line);box-shadow:none}
+    button.ghost{background:#fff7ed;color:#9a3412;border:1px dashed #fdba74;box-shadow:none}
+    button.small{font-size:13px;padding:7px 10px;min-height:34px;border-radius:10px}
+    button:disabled{opacity:.55;cursor:not-allowed}
+    .panel{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.6);padding:12px;border-radius:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:#fff}
+    .pill{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 10px;font-size:14px;font-weight:700}
+    .grid{display:grid;grid-template-columns:260px 1fr;gap:16px;margin-top:16px}
+    .side{position:sticky;top:10px;align-self:start;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:14px;box-shadow:var(--shadow)}
+    .side h3{margin:4px 0 10px;font-size:16px}
+    .progress{height:12px;background:#ffedd5;border-radius:999px;overflow:hidden;border:1px solid #fed7aa}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,#f97316,#facc15);transition:.25s}
+    .nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+    .nav a{display:flex;align-items:center;justify-content:center;min-height:36px;border-radius:12px;background:#fff7ed;color:#9a3412;text-decoration:none;font-weight:800;border:1px solid #fed7aa}
+    .nav a.done{background:#dcfce7;color:#166534;border-color:#86efac}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:24px;margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
+    .section-head{background:#fff7ed;border-bottom:1px solid var(--line);padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+    .section-head h2{font-size:19px;margin:0;color:#9a3412}
+    .scoretag{background:#ffedd5;border:1px solid #fed7aa;color:#9a3412;border-radius:999px;padding:5px 10px;font-weight:800;font-size:13px}
+    .q{padding:16px;border-top:1px dashed #fed7aa}
+    .q:first-of-type{border-top:0}
+    .q h3{font-size:16px;margin:0 0 12px;line-height:1.45}
+    .hint{font-size:13px;color:var(--muted);margin:6px 0 10px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .input-card{background:#fffaf5;border:1px solid #fed7aa;border-radius:16px;padding:10px;margin:8px 0}
+    label{font-weight:700}
+    input[type="text"],textarea,input[type="number"]{width:100%;border:1.5px solid #fdba74;background:#fff;border-radius:12px;padding:10px 11px;font-size:16px;outline:none;min-height:42px}
+    input[type="text"]:focus,textarea:focus,input[type="number"]:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(249,115,22,.12)}
+    textarea{min-height:82px;resize:vertical;line-height:1.7}
+    .options{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .opt{display:flex;align-items:center;gap:6px;background:#fffaf5;border:1px solid #fed7aa;border-radius:14px;padding:9px 10px;min-height:42px}
+    .opt input{width:18px;height:18px}
+    .readbox{background:#f8fafc;border-left:5px solid #f97316;border-radius:16px;padding:14px;line-height:2;font-size:17px;margin:10px 0;white-space:pre-wrap}
+    .manual{background:#f0f9ff;border:1px solid #bfdbfe;border-radius:16px;padding:10px;margin-top:10px;display:none}
+    .manual.open{display:block}
+    .answer{display:none;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:14px;padding:10px;margin-top:10px;line-height:1.7;color:#14532d}
+    .answer.show{display:block}
+    .result{display:none;background:#fff;border:2px solid #fdba74;border-radius:24px;padding:16px;margin:16px 0;box-shadow:var(--shadow)}
+    .result.show{display:block}
+    .bigscore{font-size:34px;font-weight:900;color:#f97316;line-height:1}
+    .checkline{font-size:14px;margin:6px 0;color:#4b5563}
+    .right{color:var(--ok);font-weight:800}.wrong{color:var(--bad);font-weight:800}
+    .footer-actions{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 12px;z-index:5}
+    .footer-inner{max-width:1040px;margin:auto;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    .timer{font-weight:900;color:#9a3412;background:#fff7ed;border:1px solid #fed7aa;border-radius:999px;padding:8px 12px}
+    .badge{display:inline-flex;align-items:center;justify-content:center;background:#dcfce7;color:#166534;border:1px solid #86efac;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;margin-left:6px}
+    .wrongMark{outline:3px solid rgba(220,38,38,.18);background:#fff1f2!important;border-color:#fecdd3!important}
+    .rightMark{outline:3px solid rgba(22,163,74,.14);background:#f0fdf4!important;border-color:#bbf7d0!important}
+    .pairgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .mini-title{font-size:14px;color:#9a3412;font-weight:800;margin:6px 0}
+    @media(max-width:820px){.grid{grid-template-columns:1fr}.side{position:static}.row{grid-template-columns:1fr}.hero h1{font-size:24px}.nav{grid-template-columns:repeat(5,1fr)}}
+    @media print{body{background:#fff}.hero,.side,.footer-actions,.manual button,.topbar,.result button{display:none!important}.wrap{max-width:none;padding:0}.grid{display:block}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.answer,.manual{display:none!important}input,textarea{border:0;border-bottom:1px solid #333;border-radius:0}.q{break-inside:avoid}.section-head{background:#fff}.readbox{border:1px solid #ddd}.badge{display:none}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>乐桐一年级下册语文期末在线测试</h1>
+      <p>满分 100 分 · 建议 60 分钟 · 客观题自动批改，主观题由家长参考答案给分。</p>
+      <p>做题前先点“开启语音”，交卷后会给乐桐中文鼓励。</p>
+      <div class="topbar">
+        <button id="startVoice">🔊 开启语音</button>
+        <button class="secondary" id="startTimer">⏱️ 开始计时</button>
+        <button class="secondary" id="printBtn">🖨️ 打印空白卷</button>
+        <span class="pill">姓名：乐桐</span><span class="pill">保存：自动保存</span>
+      </div>
+    </section>
+
+    <div class="grid">
+      <aside class="side">
+        <h3>答题进度</h3>
+        <div class="progress"><div class="bar" id="bar"></div></div>
+        <p class="hint" id="progressText">还没开始答题。</p>
+        <div class="nav" id="nav"></div>
+        <hr style="border:0;border-top:1px solid #fed7aa;margin:14px 0">
+        <div class="timer" id="timer">60:00</div>
+        <p class="hint">提示：主观题先写答案，交卷后家长可打开参考答案给分。</p>
+      </aside>
+
+      <main>
+        <div class="result" id="resultBox"></div>
+        <div id="exam"></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="footer-actions">
+    <div class="footer-inner">
+      <span class="timer" id="timer2">60:00</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ghost" id="showAnswers">👨‍👩‍👧 家长答案</button>
+        <button class="secondary" id="clearBtn">清空重做</button>
+        <button id="submitBtn">交卷批改</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const studentName = '乐桐';
+const STORE_KEY = 'letong_yuwen_final_exam_v1';
+let voiceReady = false;
+let timerRunning = false;
+let leftSeconds = 60 * 60;
+let timerHandle = null;
+let answersVisible = false;
+
+const encouragements = [
+  '乐桐真棒，做得很认真！',
+  '乐桐加油，你已经完成一大步啦！',
+  '哇，乐桐这次答题很专心！',
+  '乐桐太厉害了，继续保持！',
+  '认真检查一遍，乐桐会更棒！'
+];
+function speak(text){
+  if(!voiceReady || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = 0.92;
+  u.pitch = 1.05;
+  window.speechSynthesis.speak(u);
+}
+function norm(s){ return String(s||'').replace(/[\s　。！？!?,，、；;：:（）()“”"']/g,'').toLowerCase(); }
+function isMatch(value, answers){
+  const v = norm(value);
+  return answers.some(a => norm(a) === v);
+}
+function hasKeywords(value, words){
+  const v = String(value||'');
+  return words.every(w => v.includes(w));
+}
+
+const exam = [
+  {
+    id:'s1', title:'一、拼音与字词', score:24, questions:[
+      {id:'q1', type:'fills', title:'1. 看拼音，写词语。（每词2分，共16分）', items:[
+        ['chūn tiān','春天',2], ['běi jīng','北京',2], ['tài yáng','太阳',2], ['kuài lè','快乐',2],
+        ['zì jǐ','自己',2], ['qǐng wèn','请问',2], ['xué shēng','学生',2], ['shū huà','书画',2]
+      ]},
+      {id:'q2', type:'radios', title:'2. 给加点字选择正确读音。（每题1分，共6分）', items:[
+        {label:'音乐', opts:['yuè','lè'], ans:'yuè', score:1},
+        {label:'快乐', opts:['yuè','lè'], ans:'lè', score:1},
+        {label:'一只鸟', opts:['zhī','zhǐ'], ans:'zhī', score:1},
+        {label:'只有', opts:['zhī','zhǐ'], ans:'zhǐ', score:1},
+        {label:'天空', opts:['kōng','kòng'], ans:'kōng', score:1},
+        {label:'有空', opts:['kōng','kòng'], ans:'kòng', score:1}
+      ]},
+      {id:'q3', type:'manual', score:2, title:'3. 比一比，再组词。（共2分）', body:'清（  ）　青（  ）　请（  ）　情（  ）', placeholder:'请在这里组词，如：清水、青草、请问、心情。', answer:'示例：清水、青草、请问、心情。意思正确即可。'}
+    ]
+  },
+  {
+    id:'s2', title:'二、识字写字', score:16, questions:[
+      {id:'q4', type:'fills', title:'1. 加一加，变新字。（每空1分，共6分）', items:[
+        ['日 + 青 =','晴',1], ['氵 + 青 =','清',1], ['讠 + 青 =','请',1], ['口 + 少 =','吵',1], ['王 + 见 =','现',1], ['月 + 半 =','胖',1]
+      ]},
+      {id:'q5', type:'selects', title:'2. 连一连：选择正确的偏旁名称。（每题1分，共4分）', items:[
+        {label:'忄', opts:['水字旁','言字旁','竖心旁','虫字旁'], ans:'竖心旁', score:1},
+        {label:'氵', opts:['水字旁','言字旁','竖心旁','虫字旁'], ans:'水字旁', score:1},
+        {label:'讠', opts:['水字旁','言字旁','竖心旁','虫字旁'], ans:'言字旁', score:1},
+        {label:'虫', opts:['水字旁','言字旁','竖心旁','虫字旁'], ans:'虫字旁', score:1}
+      ]},
+      {id:'q6', type:'manual', score:6, title:'3. 把下面的字写端正。（共6分）', body:'春　阳　家　语　问　乐', placeholder:'线上版可让孩子在纸上写；家长在这里记下书写情况。', answer:'按书写端正、结构基本正确、卷面整洁给分。'}
+    ]
+  },
+  {
+    id:'s3', title:'三、词语积累与运用', score:20, questions:[
+      {id:'q7', type:'fills', title:'1. 选字填空。（每空1分，共6分）', items:[
+        ['我（ ）家里读书。','在',1], ['我明天（ ）来找你玩。','再',1], ['我（ ）经写完作业了。','已',1], ['（ ）后我要认真检查。','以',1], ['你家在（ ）里？','哪',1], ['（ ）朵花真美。','那',1]
+      ]},
+      {id:'q8', type:'fillsFlexible', title:'2. 填上合适的量词。（每空1分，共6分）', items:[
+        ['一（ ）水井',['口'],1], ['一（ ）小鸟',['只'],1], ['一（ ）书',['本'],1], ['一（ ）花',['朵'],1], ['一（ ）树',['棵','株'],1], ['一（ ）车',['辆','台'],1]
+      ]},
+      {id:'q9', type:'manual', score:4, title:'3. 照样子，写一写。（共4分）', body:'宽宽的（　　　）　洁白的（　　　）\n苹果（　　　）的、（　　　）的。', placeholder:'示例：宽宽的公路；洁白的雪莲；苹果圆圆的、红红的。', answer:'示例：宽宽的公路；洁白的雪莲；苹果圆圆的、红红的。搭配合理即可。'},
+      {id:'q10', type:'selects', title:'4. 把能搭配的词语连起来。（每题1分，共4分）', items:[
+        {label:'保护', opts:['作业','禾苗','天山','春天'], ans:'禾苗', score:1},
+        {label:'完成', opts:['作业','禾苗','天山','春天'], ans:'作业', score:1},
+        {label:'美丽的', opts:['作业','禾苗','天山','春天'], ans:'天山', score:1},
+        {label:'快乐的', opts:['作业','禾苗','天山','春天'], ans:'春天', score:1}
+      ]}
+    ]
+  },
+  {
+    id:'s4', title:'四、句子练习', score:15, questions:[
+      {id:'q11', type:'manual', score:6, title:'1. 把词语连成一句通顺的话，并加上标点。（共6分）', body:'（1）荷叶　圆圆的　是\n（2）我　多想　去看看　北京', placeholder:'请写两句话。', answer:'参考：（1）荷叶是圆圆的。/圆圆的是荷叶。 （2）我多想去北京看看！'},
+      {id:'q12', type:'manual', score:4, title:'2. 照样子，把句子写具体。（共4分）', body:'小鸟唱歌。→ 小鸟在________唱歌。\n小朋友读书。→ 小朋友在________读书。', placeholder:'示例：小鸟在树上唱歌。小朋友在教室里读书。', answer:'示例：小鸟在树上唱歌。小朋友在教室里读书。地点合适、句子通顺即可。'},
+      {id:'q13', type:'judge', title:'3. 判断句子是否正确。（每题1分，共5分）', items:[
+        {label:'请求别人帮忙时，要用礼貌用语。', ans:'√', score:1},
+        {label:'“情、晴、清、请”都和“青”有关。', ans:'√', score:1},
+        {label:'《小猴子下山》里，小猴子最后抱着很多东西回家了。', ans:'×', score:1},
+        {label:'《吃水不忘挖井人》告诉我们要记住帮助过我们的人。', ans:'√', score:1},
+        {label:'写“回、国、白”这样的字，要先外后内再封口。', ans:'√', score:1}
+      ]}
+    ]
+  },
+  {
+    id:'s5', title:'五、课文与日积月累', score:15, questions:[
+      {id:'q14', type:'fills', title:'1. 按课文内容填空。（每空1分，共6分）', items:[
+        ['春风（ ）','吹',1], ['夏雨（ ）','落',1], ['秋霜（ ）','降',1], ['冬雪（ ）','飘',1], ['低头思（ ）（ ）','故乡',2]
+      ]},
+      {id:'q15', type:'fills', title:'2. 把古诗补充完整。（共5分）', items:[
+        ['春眠不觉晓，处处闻啼（ ）。','鸟',1], ['夜来风雨声，花落知（ ）（ ）。','多少',2], ['小荷才露尖尖角，早有蜻蜓（ ）（ ）头。','立上',2]
+      ]},
+      {id:'q16', type:'choices', title:'3. 根据课文内容选择正确答案。（每题2分，共4分）', items:[
+        {label:'小公鸡捉到虫子后，把虫子给谁吃？', opts:['A. 小鸭子','B. 小青蛙','C. 小猴子'], ans:'A', score:2},
+        {label:'《文具的家》告诉我们要：', opts:['A. 爱护文具','B. 多买文具','C. 到处放文具'], ans:'A', score:2}
+      ]}
+    ]
+  },
+  {
+    id:'s6', title:'六、阅读短文，完成练习', score:10, questions:[
+      {id:'readingText', type:'text', text:'春天来了，乐桐和妈妈去公园。小草绿了，桃花红了，小鸟在树上唱歌。乐桐看见一个小弟弟摔倒了，连忙跑过去扶起他。小弟弟说：“谢谢你！”乐桐笑着说：“不客气。”妈妈夸乐桐是个懂礼貌、爱帮助人的好孩子。'},
+      {id:'q17', type:'manual', score:10, title:'完成下面5个小题。（共10分）', body:'1. 短文共有（　）句话。\n2. 乐桐和妈妈去了哪里？\n3. 乐桐看见小弟弟怎么了？\n4. 小弟弟说了什么？\n5. 你觉得乐桐是个怎样的孩子？', placeholder:'请依次写出答案。', answer:'1. 7句。2. 公园。3. 小弟弟摔倒了。4. “谢谢你！” 5. 懂礼貌、爱帮助人的好孩子。'}
+    ]
+  },
+  {
+    id:'s7', title:'七、看图写话 / 情境写话', score:10, questions:[
+      {id:'q18', type:'manual', score:10, title:'题目：下雨了。（共10分）', body:'提示：谁在哪里？发生了什么？他/她是怎么做的？请写2—3句话。', placeholder:'请在这里写2—3句话。', answer:'评分建议：能写清“谁、在哪里、做什么”得6分；句子通顺、标点基本正确得2分；书写整洁得2分。'}
+    ]
+  }
+];
+
+function load(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)||'{}'); }catch(e){ return {}; }
+}
+function saveVal(key,val){ const data=load(); data[key]=val; localStorage.setItem(STORE_KEY,JSON.stringify(data)); updateProgress(); }
+function getVal(key){ return load()[key] ?? ''; }
+function idFor(qid,idx){ return qid + '_' + idx; }
+function renderExam(){
+  const root = document.getElementById('exam');
+  root.innerHTML = exam.map((sec, si)=>{
+    const qs = sec.questions.map((q, qi)=>renderQuestion(q, si, qi)).join('');
+    return `<section class="card" id="${sec.id}"><div class="section-head"><h2>${sec.title}</h2><span class="scoretag">${sec.score}分</span></div>${qs}</section>`;
+  }).join('');
+  bindInputs(); renderNav(); updateProgress();
+}
+function renderQuestion(q, si, qi){
+  if(q.type==='text') return `<div class="q"><div class="readbox">${q.text}</div></div>`;
+  let html = `<div class="q" id="${q.id}"><h3>${q.title||''} ${q.type==='manual'?'<span class="badge">家长给分</span>':''}</h3>`;
+  if(q.body) html += `<div class="readbox">${q.body}</div>`;
+  if(q.type==='fills' || q.type==='fillsFlexible'){
+    html += `<div class="row">` + q.items.map((it,i)=>{
+      const prompt = it[0], ans = it[1], score = it[2];
+      return `<div class="input-card"><label>${prompt}</label><input type="text" data-key="${idFor(q.id,i)}" data-q="${q.id}" placeholder="写答案" value="${escapeHtml(getVal(idFor(q.id,i)))}"><div class="hint">${score}分</div></div>`
+    }).join('') + `</div>`;
+  }
+  if(q.type==='radios'){
+    html += q.items.map((it,i)=>`<div class="input-card"><label>${it.label}</label><div class="options">${it.opts.map(opt=>`<label class="opt"><input type="radio" name="${idFor(q.id,i)}" data-key="${idFor(q.id,i)}" data-q="${q.id}" value="${opt}" ${getVal(idFor(q.id,i))===opt?'checked':''}>${opt}</label>`).join('')}</div></div>`).join('');
+  }
+  if(q.type==='selects'){
+    html += `<div class="pairgrid">` + q.items.map((it,i)=>`<div class="input-card"><label>${it.label}</label><select data-key="${idFor(q.id,i)}" data-q="${q.id}" style="width:100%;margin-top:8px;border:1.5px solid #fdba74;border-radius:12px;padding:10px;font-size:16px;background:#fff"><option value="">请选择</option>${it.opts.map(opt=>`<option value="${opt}" ${getVal(idFor(q.id,i))===opt?'selected':''}>${opt}</option>`).join('')}</select></div>`).join('') + `</div>`;
+  }
+  if(q.type==='judge'){
+    html += q.items.map((it,i)=>`<div class="input-card"><label>${it.label}</label><div class="options"><label class="opt"><input type="radio" name="${idFor(q.id,i)}" data-key="${idFor(q.id,i)}" data-q="${q.id}" value="√" ${getVal(idFor(q.id,i))==='√'?'checked':''}>√</label><label class="opt"><input type="radio" name="${idFor(q.id,i)}" data-key="${idFor(q.id,i)}" data-q="${q.id}" value="×" ${getVal(idFor(q.id,i))==='×'?'checked':''}>×</label></div></div>`).join('');
+  }
+  if(q.type==='choices'){
+    html += q.items.map((it,i)=>`<div class="input-card"><label>${it.label}</label><div class="options">${it.opts.map(opt=>`<label class="opt"><input type="radio" name="${idFor(q.id,i)}" data-key="${idFor(q.id,i)}" data-q="${q.id}" value="${opt[0]}" ${getVal(idFor(q.id,i))===opt[0]?'checked':''}>${opt}</label>`).join('')}</div></div>`).join('');
+  }
+  if(q.type==='manual'){
+    html += `<textarea data-key="${q.id}_manual" data-q="${q.id}" placeholder="${q.placeholder||'请写答案'}">${escapeHtml(getVal(q.id+'_manual'))}</textarea>`;
+    html += `<div class="manual" id="manual_${q.id}"><div class="mini-title">家长参考答案 / 给分</div><div class="answer show">${q.answer}</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px"><label>本题得分：</label><input type="number" min="0" max="${q.score}" step="0.5" data-manual-score="${q.id}" value="${escapeHtml(getVal('score_'+q.id))}" style="max-width:110px"> <span class="hint">满分 ${q.score} 分</span></div></div>`;
+  }
+  if(q.type!=='manual' && q.type!=='text') html += `<div class="answer" id="ans_${q.id}">${answerText(q)}</div>`;
+  html += `</div>`;
+  return html;
+}
+function answerText(q){
+  if(q.type==='fills') return '答案：' + q.items.map(x=>x[1]).join('、');
+  if(q.type==='fillsFlexible') return '参考答案：' + q.items.map(x=>Array.isArray(x[1])?x[1][0]:x[1]).join('、');
+  if(q.type==='radios'||q.type==='selects'||q.type==='judge') return '答案：' + q.items.map(x=>`${x.label}：${x.ans}`).join('；');
+  if(q.type==='choices') return '答案：' + q.items.map((x,i)=>`第${i+1}题 ${x.ans}`).join('；');
+  return '';
+}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function bindInputs(){
+  document.querySelectorAll('[data-key]').forEach(el=>{
+    const ev = el.tagName==='SELECT' || el.type==='radio' ? 'change' : 'input';
+    el.addEventListener(ev, e=> saveVal(el.dataset.key, el.value));
+  });
+  document.querySelectorAll('[data-manual-score]').forEach(el=>{
+    el.addEventListener('input', e=> saveVal('score_'+el.dataset.manualScore, el.value));
+  });
+}
+function renderNav(){
+  document.getElementById('nav').innerHTML = exam.map((s,i)=>`<a href="#${s.id}" id="nav_${s.id}">${i+1}</a>`).join('');
+}
+function allAnswerKeys(){
+  const keys=[];
+  exam.forEach(sec=>sec.questions.forEach(q=>{
+    if(['fills','fillsFlexible','radios','selects','judge','choices'].includes(q.type)) q.items.forEach((it,i)=>keys.push(idFor(q.id,i)));
+    if(q.type==='manual') keys.push(q.id+'_manual');
+  }));
+  return keys;
+}
+function updateProgress(){
+  const data=load(); const keys=allAnswerKeys();
+  const done = keys.filter(k=>String(data[k]||'').trim()!=='').length;
+  const pct = Math.round(done/keys.length*100);
+  document.getElementById('bar').style.width = pct+'%';
+  document.getElementById('progressText').textContent = `已完成 ${done}/${keys.length} 项，约 ${pct}%`;
+  exam.forEach(sec=>{
+    const secKeys=[]; sec.questions.forEach(q=>{
+      if(['fills','fillsFlexible','radios','selects','judge','choices'].includes(q.type)) q.items.forEach((it,i)=>secKeys.push(idFor(q.id,i)));
+      if(q.type==='manual') secKeys.push(q.id+'_manual');
+    });
+    const ok = secKeys.length && secKeys.every(k=>String(data[k]||'').trim()!=='');
+    const nav=document.getElementById('nav_'+sec.id); if(nav) nav.classList.toggle('done', ok);
+  });
+}
+function grade(){
+  let auto=0, autoMax=0, wrong=[];
+  document.querySelectorAll('.wrongMark,.rightMark').forEach(e=>e.classList.remove('wrongMark','rightMark'));
+  exam.forEach(sec=>sec.questions.forEach(q=>{
+    if(q.type==='fills') q.items.forEach((it,i)=>{autoMax+=it[2]; const k=idFor(q.id,i); const el=document.querySelector(`[data-key="${k}"]`); if(isMatch(getVal(k),[it[1]])){auto+=it[2]; el&&el.classList.add('rightMark')} else {wrong.push(`${q.title}：${it[0]}`); el&&el.classList.add('wrongMark')}});
+    if(q.type==='fillsFlexible') q.items.forEach((it,i)=>{autoMax+=it[2]; const k=idFor(q.id,i); const el=document.querySelector(`[data-key="${k}"]`); const arr=Array.isArray(it[1])?it[1]:[it[1]]; if(isMatch(getVal(k),arr)){auto+=it[2]; el&&el.classList.add('rightMark')} else {wrong.push(`${q.title}：${it[0]}`); el&&el.classList.add('wrongMark')}});
+    if(['radios','selects','judge','choices'].includes(q.type)) q.items.forEach((it,i)=>{autoMax+=it.score; const k=idFor(q.id,i); const nodes=document.querySelectorAll(`[data-key="${k}"]`); if(getVal(k)===it.ans){auto+=it.score; nodes.forEach(n=>n.closest('.input-card')?.classList.add('rightMark'))} else {wrong.push(`${q.title}：${it.label}`); nodes.forEach(n=>n.closest('.input-card')?.classList.add('wrongMark'))}});
+  }));
+  let manual=0, manualMax=0;
+  exam.forEach(sec=>sec.questions.forEach(q=>{ if(q.type==='manual'){ manualMax+=q.score; const v=parseFloat(getVal('score_'+q.id)); if(!isNaN(v)) manual += Math.max(0, Math.min(q.score, v)); }}));
+  const total = auto + manual;
+  const max = autoMax + manualMax;
+  const msg = total>=90 ? `乐桐太棒了，总分已经很高啦！` : total>=75 ? `乐桐做得不错，再把错题改一改！` : `乐桐已经完成试卷啦，咱们慢慢改错继续进步！`;
+  document.getElementById('resultBox').classList.add('show');
+  document.getElementById('resultBox').innerHTML = `<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><div><div class="hint">本次成绩</div><div class="bigscore">${total}/${max}</div></div><div><button onclick="scrollToWrong()">查看错题</button> <button class="secondary" onclick="toggleAnswers(true)">打开参考答案</button></div></div><p><strong>${msg}</strong></p><p class="checkline">客观题自动得分：${auto}/${autoMax}；主观题家长给分：${manual}/${manualMax}。</p><p class="checkline">错题数量：${wrong.length} 项。红色题目请重点复习。</p>`;
+  speak(msg);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function scrollToWrong(){ const el=document.querySelector('.wrongMark'); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); }
+function toggleAnswers(force){
+  answersVisible = force===true ? true : !answersVisible;
+  document.querySelectorAll('.answer').forEach(el=>el.classList.toggle('show', answersVisible));
+  document.querySelectorAll('.manual').forEach(el=>el.classList.toggle('open', answersVisible));
+  document.getElementById('showAnswers').textContent = answersVisible ? '隐藏答案' : '👨‍👩‍👧 家长答案';
+}
+function fmt(sec){ const m=String(Math.floor(sec/60)).padStart(2,'0'); const s=String(sec%60).padStart(2,'0'); return `${m}:${s}`; }
+function tick(){ if(leftSeconds>0) leftSeconds--; document.getElementById('timer').textContent=fmt(leftSeconds); document.getElementById('timer2').textContent=fmt(leftSeconds); if(leftSeconds===5*60) speak('乐桐，还有五分钟，记得检查一下。'); }
+function startTimer(){ if(timerRunning) return; timerRunning=true; timerHandle=setInterval(tick,1000); speak('乐桐，开始考试啦，认真读题，慢慢做。'); }
+
+document.getElementById('startVoice').onclick=()=>{ voiceReady=true; speak('语音打开啦，乐桐加油！'); };
+document.getElementById('startTimer').onclick=startTimer;
+document.getElementById('printBtn').onclick=()=>window.print();
+document.getElementById('submitBtn').onclick=grade;
+document.getElementById('showAnswers').onclick=()=>toggleAnswers();
+document.getElementById('clearBtn').onclick=()=>{ if(confirm('确定要清空所有答案吗？')){ localStorage.removeItem(STORE_KEY); location.reload(); } };
+renderExam();
+</script>
+</body>
+</html>
